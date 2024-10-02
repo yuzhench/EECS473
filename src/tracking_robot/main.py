@@ -4,6 +4,18 @@ from ultralytics import YOLO
 from util import Tracker
 import random
 import json
+import argparse
+
+
+
+def setup_arguments():
+    parser = argparse.ArgumentParser(description="choose the mode ")
+
+    parser.add_argument('-c', '--choose', type=bool, default=True)
+    parser.add_argument('-t', '--toggle', action='store_true', help="Toggle some feature on.")
+    
+    return parser
+
 
 def load_color (json_path):
     with open(json_path, 'r') as file:
@@ -47,12 +59,13 @@ def process_video(input_video_path, output_video_path, model, tracker, colors):
            
           
             x1, y1, x2, y2 =  int(curr_xyxy[0]), int(curr_xyxy[1]), int(curr_xyxy[2]), int(curr_xyxy[3])
+
             #define detection:
-          
-            detections.append([x1,y1,x2,y2,conf.item()])
+            if model.names[int(cls_id)] == 'person':
+                detections.append([x1,y1,x2,y2,conf.item()])
 
         
-        print(detections)
+        # print(detections)
     
         # exit(0)
         #try to update the tracker 
@@ -60,19 +73,16 @@ def process_video(input_video_path, output_video_path, model, tracker, colors):
         print("successfully update the tracker")
 
 
-         
+        
         for track in tracker.tracks:
-            if model.names[int(cls_id)] == 'person':
-                bbox = track.bbox
-                x1, y1, x2, y2 = bbox
-                track_id = track.track_id
-                cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (colors[track_id % len(colors)]), 2)
+            label = 'person'
+            bbox = track.bbox
+            x1, y1, x2, y2 = bbox
+            track_id = track.track_id
+            cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (colors[track_id % len(colors)]), 2)
+            cv2.putText(frame, f'{label} {track_id} {conf:.2f}', (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 1)
 
-            # # Draw rectangle
-            # cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            # # Confidence and class label
-            # label = f"{model.names[int(cls_id)]}"
-            # cv2.putText(frame, f'{label} {conf:.2f}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
         
 
 
