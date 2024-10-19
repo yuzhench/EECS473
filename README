@@ -1,2 +1,6 @@
 - the modole resource: https://huggingface.co/Ultralytics/YOLOv8/tree/main
 - YOLOV8 documentation: https://docs.ultralytics.com/reference/engine/results/
+
+
+
+- check the web camera i have: v4l2-ctl --list-devices
