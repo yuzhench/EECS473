@@ -3,4 +3,4 @@
 
 
 
-- check the web camera i have: 'v4l2-ctl --list-devices'
+- check the web camera i have: `v4l2-ctl --list-devices`
