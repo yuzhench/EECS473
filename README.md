@@ -9,11 +9,11 @@ v4l2-ctl --list-devices
 ```
 
 # time measurement
-run the yolov5n.pt on linux computer: 
+- run the yolov5n.pt on linux computer: 
 ```average model inference time is:  0.012```
-run the yolov8n.pt on linux computer:
+- run the yolov8n.pt on linux computer:
 ```average model inference time is:  0.011``` -- current best
-run the yolo11n.pt on linux computer:
+- run the yolo11n.pt on linux computer:
 ```average model inference time is:  0.016``` -- current best
-run the yolov1 VGG19-BN on linux compiuter 
+- run the yolov1 VGG19-BN on linux compiuter 
 ```average model inference time is 1.96 second``` --> bad
